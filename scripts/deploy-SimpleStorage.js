@@ -18,6 +18,18 @@ async function main() {
   const SimpleStorage = await hre.ethers.getContractFactory('SimpleStorage');
   const simpleStorage = await SimpleStorage.deploy('Hello, Hardfork!');
 
+  // Todo deployed.json script
+  const contractInfo = async () => {
+    const info = {
+      name: simpleStorage.name,
+      address: simpleStorage.address,
+      network: hre.network.name,
+    };
+    await fsPromises.writeFile('./deployed.json', info);
+  };
+  contractInfo();
+  // Error "fsPromises is not defined"...
+
   // Attendre que le contrat soit réellement déployé, cad que la transaction de déploiement
   // soit incluse dans un bloc
   await simpleStorage.deployed();
